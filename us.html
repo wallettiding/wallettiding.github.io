@@ -144,7 +144,7 @@
         <img class="slide-img" id="slideImg" src="Photos/web/0edbc3d9-fffe-4f92-9905-45aac298a765.jpg" alt="">
         <button class="slide-btn slide-next" id="slideNext" aria-label="Next photo">&#8250;</button>
       </div>
-      <div class="slide-counter" id="slideCounter">1 / 68</div>
+      <div class="slide-counter" id="slideCounter"></div>
     </div>
 
     <script>
@@ -230,14 +230,23 @@
           idx = (n + photos.length) % photos.length;
           img.style.opacity = '0';
           setTimeout(function() {
-            img.src = photos[idx];
-            img.style.opacity = '1';
+            var newImg = new Image();
+            newImg.onload = function() {
+              img.src = photos[idx];
+              img.style.opacity = '1';
+            };
+            newImg.src = photos[idx];
           }, 200);
           counter.textContent = (idx + 1) + ' / ' + photos.length;
         }
 
         function next() { show(idx + 1); resetTimer(); }
         function prev() { show(idx - 1); resetTimer(); }
+
+        document.addEventListener('keydown', function(e) {
+          if(e.key === 'ArrowRight') { next(); }
+          else if(e.key === 'ArrowLeft') { prev(); }
+        });
 
         function resetTimer() {
           clearInterval(timer);
@@ -247,6 +256,7 @@
         document.getElementById('slideNext').addEventListener('click', next);
         document.getElementById('slidePrev').addEventListener('click', prev);
 
+        show(0);
         resetTimer();
       })();
     </script>
