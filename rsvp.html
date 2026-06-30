@@ -211,7 +211,7 @@
     if(document.getElementById('shuttle-late').checked) shuttles.push('Late (~10:00 PM)');
     if(document.getElementById('shuttle-none').checked) shuttles.push('No shuttle needed');
 
-    var body=new URLSearchParams({
+    var data={
       name: fn+' '+ln,
       guest: (document.getElementById('fname2').value.trim()+' '+document.getElementById('lname2').value.trim()).trim(),
       email: document.getElementById('email').value.trim(),
@@ -220,15 +220,15 @@
       dietary: document.getElementById('dietary').value.trim(),
       song: document.getElementById('song').value.trim(),
       note: document.getElementById('note').value.trim()
-    });
+    };
 
     btn.disabled=true;
     btn.textContent='Sending…';
 
     fetch('https://formspree.io/f/xzdlaqor', {
       method:'POST',
-      headers:{'Accept':'application/json','Content-Type':'application/x-www-form-urlencoded'},
-      body:body.toString()
+      headers:{'Accept':'application/json','Content-Type':'application/json'},
+      body:JSON.stringify(data)
     }).then(function(r){
       if(r.ok){
         document.getElementById('rsvp-form').style.display='none';
