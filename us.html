@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Us · Chad & Rebekah</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --terracotta:#C16A42; --terracotta-deep:#9A4E2C; --terracotta-soft:#E5A883;
+    --clay:#D98B5F; --sun:#E8B24C; --sage:#8A9A6B; --sage-deep:#5E6E45;
+    --cactus:#7CA05B; --dusk-purple:#9A8BB0; --espresso:#3A2E26; --ink:#4A3B30;
+    --paper:#FBF6EE; --paper-warm:#F6ECDD; --paper-deep:#EFE2CE;
+    --border:#E0D2BC; --text:#4A3B30; --text-muted:#8A7763;
+  }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:var(--paper); color:var(--text); font-size:16px; line-height:1.7;
+    letter-spacing:0.01em; min-height:100vh; display:flex; flex-direction:column;
+  }
+  .sky-wash { height:8px; background:linear-gradient(90deg,var(--sun),var(--terracotta-soft),var(--dusk-purple),var(--sage)); opacity:0.55; }
+  nav {
+    background:var(--paper-warm); border-bottom:1px solid var(--border);
+    padding:0 2rem; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; min-height:64px; position:sticky; top:0; z-index:100;
+  }
+  .nav-brand { font-family:Georgia,'Times New Roman',serif; font-size:18px; letter-spacing:0.06em; color:var(--terracotta-deep); text-decoration:none; white-space:nowrap; }
+  .nav-brand span { color:var(--cactus); font-style:italic; }
+  .nav-links { display:flex; gap:1.5rem; list-style:none; flex-wrap:wrap; }
+  .nav-links a { text-decoration:none; font-size:12px; letter-spacing:0.09em; text-transform:uppercase; color:var(--text-muted); padding:0.5rem 0; border-bottom:2px solid transparent; transition:color 0.2s,border-color 0.2s; }
+  .nav-links a:hover { color:var(--terracotta-deep); }
+  .nav-links a.active { color:var(--terracotta-deep); border-bottom-color:var(--terracotta); }
+  main { flex:1; }
+  .page { max-width:760px; margin:0 auto; padding:3rem 2rem 5rem; }
+  .invite-img { display:block; width:100%; max-width:760px; margin:0 auto 2rem; border:1px solid var(--border); border-radius:6px; }
+  .eyebrow { font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--terracotta); margin-bottom:0.85rem; }
+  h1 { font-family:Georgia,'Times New Roman',serif; font-weight:normal; color:var(--espresso); line-height:1.1; }
+  h2 { font-family:Georgia,'Times New Roman',serif; font-size:clamp(1.6rem,3.2vw,2.3rem); font-weight:normal; color:var(--espresso); line-height:1.2; margin-bottom:1.5rem; }
+  h3 { font-family:Georgia,serif; font-weight:normal; color:var(--espresso); }
+  p { margin-bottom:1rem; }
+  .muted { color:var(--text-muted); }
+  .arrows { text-align:center; color:var(--terracotta-soft); letter-spacing:0.35em; font-size:13px; margin:2.5rem 0; user-select:none; }
+  a.link { color:var(--terracotta-deep); text-decoration:none; border-bottom:1px solid var(--terracotta-soft); }
+  a.link:hover { color:var(--terracotta); }
+  .hero { text-align:center; }
+  .countdown { display:flex; gap:2.25rem; justify-content:center; margin-top:2.25rem; flex-wrap:wrap; }
+  .cd-unit { text-align:center; min-width:56px; }
+  .cd-num { font-family:Georgia,serif; font-size:2.5rem; color:var(--terracotta-deep); display:block; line-height:1; }
+  .cd-label { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-top:8px; display:block; }
+  .cta-row { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:2.25rem; }
+  .btn { display:inline-block; padding:0.7rem 1.85rem; border:1.5px solid var(--terracotta); color:var(--terracotta-deep); background:transparent; text-decoration:none; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; border-radius:3px; cursor:pointer; transition:background 0.2s,color 0.2s; font-family:inherit; }
+  .btn:hover { background:var(--terracotta); color:var(--paper); }
+  .btn-primary { background:var(--terracotta); color:var(--paper); }
+  .btn-primary:hover { background:var(--terracotta-deep); border-color:var(--terracotta-deep); }
+  .info-block { background:var(--paper-warm); border:1px solid var(--border); border-radius:6px; padding:1.5rem 1.75rem; margin-bottom:1.5rem; }
+  .info-block h3 { font-size:1.15rem; margin-bottom:0.6rem; }
+  .info-block p { font-size:15px; color:var(--ink); margin-bottom:0.6rem; }
+  .day-block { margin-bottom:2.5rem; }
+  .day-head { display:flex; align-items:baseline; gap:1rem; margin-bottom:0.25rem; flex-wrap:wrap; }
+  .day-date { font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); }
+  .day-title { font-family:Georgia,serif; font-size:1.6rem; color:var(--terracotta-deep); }
+  .day-where { font-size:14px; color:var(--ink); margin:0.5rem 0 0.25rem; }
+  .day-dress { font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--sage-deep); margin-bottom:1rem; }
+  .sched { list-style:none; border-left:2px solid var(--terracotta-soft); margin-left:6px; padding-left:1.5rem; }
+  .sched li { position:relative; padding:0.4rem 0; font-size:15px; color:var(--ink); }
+  .sched li::before { content:''; position:absolute; left:-1.5rem; top:0.95rem; transform:translateX(-52%); width:8px; height:8px; border-radius:50%; background:var(--terracotta); }
+  .sched .time { display:inline-block; min-width:92px; color:var(--terracotta-deep); font-weight:500; }
+  .gift-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.25rem; margin-top:1.5rem; }
+  .gift-card { background:var(--paper-warm); border:1px solid var(--border); border-radius:6px; padding:1.5rem; }
+  .gift-card h3 { font-size:1.15rem; margin-bottom:0.5rem; }
+  .gift-card p { font-size:14px; color:var(--ink); margin-bottom:0.3rem; }
+  .gift-card .detail { font-family:'SF Mono',Menlo,monospace; font-size:13px; color:var(--terracotta-deep); background:var(--paper); padding:0.5rem 0.7rem; border-radius:4px; border:1px solid var(--border); margin-top:0.6rem; word-break:break-word; }
+  .photo-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin:1.5rem 0; }
+  .photo-ph { aspect-ratio:4/3; background:var(--paper-deep); border:1px dashed var(--border); border-radius:6px; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:13px; text-align:center; padding:1rem; }
+  .form-row { margin-bottom:1.3rem; }
+  .form-row label { display:block; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.45rem; }
+  .form-row input, .form-row select, .form-row textarea { width:100%; padding:0.65rem 0.9rem; border:1px solid var(--border); border-radius:4px; background:var(--paper); color:var(--text); font-size:15px; font-family:inherit; appearance:none; outline:none; transition:border-color 0.2s,box-shadow 0.2s; }
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus { border-color:var(--terracotta); box-shadow:0 0 0 3px rgba(193,106,66,0.12); }
+  .form-row textarea { min-height:84px; resize:vertical; }
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .plus-one-note { font-size:13px; color:var(--text-muted); margin:-0.5rem 0 1.3rem; }
+  .rsvp-success { display:none; background:var(--paper-warm); border:1px solid var(--border); border-radius:6px; padding:2.5rem 2rem; text-align:center; }
+  .rsvp-success h3 { font-size:1.5rem; margin-bottom:0.5rem; color:var(--terracotta-deep); }
+  .faq-item { border-top:1px solid var(--border); padding:1.25rem 0; }
+  .faq-item:last-child { border-bottom:1px solid var(--border); }
+  .faq-q { font-size:16px; font-weight:500; color:var(--espresso); cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:1rem; user-select:none; }
+  .faq-q::after { content:'+'; font-size:20px; color:var(--terracotta); }
+  .faq-item.open .faq-q::after { content:'\2212'; }
+  .faq-a { display:none; padding-top:0.75rem; font-size:15px; color:var(--ink); }
+  .faq-item.open .faq-a { display:block; }
+  footer { background:var(--espresso); color:var(--paper-deep); text-align:center; padding:3rem 2rem; font-size:13px; letter-spacing:0.04em; }
+  footer .f-names { font-family:Georgia,serif; font-size:1.5rem; color:var(--terracotta-soft); margin-bottom:0.4rem; }
+  footer .f-arrows { color:var(--clay); letter-spacing:0.3em; margin:0.75rem 0; opacity:0.7; }
+  @media (max-width:640px) {
+    nav { padding:0.75rem 1.25rem; }
+    .nav-links { gap:0.9rem; width:100%; }
+    .nav-links a { font-size:11px; }
+    .page { padding:2rem 1.25rem 4rem; }
+    .form-grid { grid-template-columns:1fr; }
+    .countdown { gap:1.5rem; }
+    .sched .time { display:block; min-width:0; }
+  }
+  .slideshow-wrap { margin: 2rem 0; }
+  .slideshow { position:relative; width:100%; background:var(--paper-deep); border-radius:8px; overflow:hidden; }
+  .slide-img { display:block; width:100%; max-height:600px; object-fit:contain; transition:opacity 0.2s ease; }
+  .slide-btn { position:absolute; top:50%; transform:translateY(-50%); background:rgba(58,46,38,0.45); color:#fff; border:none; font-size:2.5rem; line-height:1; width:52px; height:52px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:10; transition:background 0.2s; padding:0; }
+  .slide-btn:hover { background:rgba(58,46,38,0.75); }
+  .slide-prev { left:0.75rem; }
+  .slide-next { right:0.75rem; }
+  .slide-counter { text-align:center; font-size:12px; letter-spacing:0.1em; color:var(--text-muted); margin-top:0.6rem; }
+</style>
+</head>
+<body>
+<div class="sky-wash"></div>
+<nav>
+  <a class="nav-brand" href="index.html">Chad <span>&amp;</span> Rebekah</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="schedule.html">Schedule</a></li>
+    <li><a href="travel.html">Travel &amp; Stay</a></li>
+    <li><a href="us.html" class="active">Us</a></li>
+    <li><a href="gifts.html">Gifts</a></li>
+    <li><a href="rsvp.html">RSVP</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+  </ul>
+</nav>
+<main>
+  <div class="page">
+    <p class="eyebrow">Us</p>
+    <h2>Chad &amp; Rebekah</h2>
+
+    <p style="font-family:Georgia,'Times New Roman',serif; font-size:clamp(1.25rem,2.5vw,1.6rem); color:var(--espresso); line-height:1.3; margin-bottom:1.5rem;">"The right decision… at the wrong time…"</p>
+
+    <p>Yes, we're already married. And at the time, it was a difficult decision for us. As most of you know, we were forced to take a leap of faith together when we decided to move to Saudi Arabia. Marriage wasn't something we were planning on then, but we knew we had a connection worth holding onto, worth trying to build a life around. It was one of the hardest decisions we've made together and ended up being one of the best.</p>
+
+    <p>As tempting as it was to drop the whole family album for everyone to peruse, we kept it to photos mostly featuring the two of us; where we've lived, where we've traveled, and how we've grown together over these last seven years. There's our life in Tucson, a brief stint in Flagstaff and Kansas, our years in Saudi Arabia, and the many trips back home and around the world.</p>
+
+    <p>We both tend to point the camera outward; at the spaces, the things, and the people around us. But this day, and this celebration, are about us, so we're turning the lens around!</p>
+
+    <div class="slideshow-wrap">
+      <div class="slideshow" id="slideshow">
+        <button class="slide-btn slide-prev" id="slidePrev" aria-label="Previous photo">&#8249;</button>
+        <img class="slide-img" id="slideImg" src="Photos/web/0edbc3d9-fffe-4f92-9905-45aac298a765.jpg" alt="">
+        <button class="slide-btn slide-next" id="slideNext" aria-label="Next photo">&#8250;</button>
+      </div>
+      <div class="slide-counter" id="slideCounter">1 / 68</div>
+    </div>
+
+    <script>
+      (function() {
+        var photos = [
+    "Photos/web/0edbc3d9-fffe-4f92-9905-45aac298a765.jpg",
+    "Photos/web/3577b4b3-9870-4fbe-9e9a-0cb9598f84d6.jpg",
+    "Photos/web/7de4e3c2-d127-4716-8fbb-2a3d77ea3959.jpg",
+    "Photos/web/DSC02095.jpg",
+    "Photos/web/IMG_0004.jpg",
+    "Photos/web/IMG_0020.jpg",
+    "Photos/web/IMG_0048.jpg",
+    "Photos/web/IMG_0104.jpg",
+    "Photos/web/IMG_0121.jpg",
+    "Photos/web/IMG_0160.jpg",
+    "Photos/web/IMG_0249.jpg",
+    "Photos/web/IMG_0271.jpg",
+    "Photos/web/IMG_0304.jpg",
+    "Photos/web/IMG_0369.jpg",
+    "Photos/web/IMG_0449.jpg",
+    "Photos/web/IMG_0521.jpg",
+    "Photos/web/IMG_0602.jpg",
+    "Photos/web/IMG_06FBF4E448DE-1.jpg",
+    "Photos/web/IMG_0759.jpg",
+    "Photos/web/IMG_0C8B7E58943D-1.jpg",
+    "Photos/web/IMG_1196.jpg",
+    "Photos/web/IMG_1210.jpg",
+    "Photos/web/IMG_1253.jpg",
+    "Photos/web/IMG_1524.jpg",
+    "Photos/web/IMG_1577.jpg",
+    "Photos/web/IMG_1884.jpg",
+    "Photos/web/IMG_1908.jpg",
+    "Photos/web/IMG_20210930_140613271_MP~2.jpg",
+    "Photos/web/IMG_241E146EE22B-1.jpg",
+    "Photos/web/IMG_2620.jpg",
+    "Photos/web/IMG_2692.jpg",
+    "Photos/web/IMG_2772.jpg",
+    "Photos/web/IMG_2963.jpg",
+    "Photos/web/IMG_3010.jpg",
+    "Photos/web/IMG_3378.jpg",
+    "Photos/web/IMG_3471.jpg",
+    "Photos/web/IMG_3518.jpg",
+    "Photos/web/IMG_3588.jpg",
+    "Photos/web/IMG_437734B2644F-1.jpg",
+    "Photos/web/IMG_4834.jpg",
+    "Photos/web/IMG_5004.jpg",
+    "Photos/web/IMG_5021.jpg",
+    "Photos/web/IMG_5130.jpg",
+    "Photos/web/IMG_5153.jpg",
+    "Photos/web/IMG_5273.jpg",
+    "Photos/web/IMG_5305.jpg",
+    "Photos/web/IMG_5398.jpg",
+    "Photos/web/IMG_5525 2.jpg",
+    "Photos/web/IMG_5525.jpg",
+    "Photos/web/IMG_6100.jpg",
+    "Photos/web/IMG_6163.jpg",
+    "Photos/web/IMG_6461.jpg",
+    "Photos/web/IMG_6684.jpg",
+    "Photos/web/IMG_6754.jpg",
+    "Photos/web/IMG_6815.jpg",
+    "Photos/web/IMG_7642.jpg",
+    "Photos/web/IMG_7704.jpg",
+    "Photos/web/IMG_7849.jpg",
+    "Photos/web/IMG_8067.jpg",
+    "Photos/web/IMG_8081.jpg",
+    "Photos/web/IMG_9286.jpg",
+    "Photos/web/IMG_9503.jpg",
+    "Photos/web/IMG_9732.jpg",
+    "Photos/web/IMG_996D7B32B3EA-1.jpg",
+    "Photos/web/IMG_9A0266364FAE-1.jpg",
+    "Photos/web/IMG_AAFCC8CB892B-1.jpg",
+    "Photos/web/IMG_ECD5AB9162F2-1.jpg",
+    "Photos/web/ac0c05d5-e3e4-4198-b3a2-3f7f4cdfe687.jpg",
+    "Photos/web/c010dddf-622c-400c-bc17-c11bd787eb8b.jpg",
+    "Photos/web/d37762ab-6eae-4b67-bfe6-09e134262525.jpg"
+        ];
+        var idx = 0;
+        var img = document.getElementById('slideImg');
+        var counter = document.getElementById('slideCounter');
+        var timer;
+
+        function show(n) {
+          idx = (n + photos.length) % photos.length;
+          img.style.opacity = '0';
+          setTimeout(function() {
+            img.src = photos[idx];
+            img.style.opacity = '1';
+          }, 200);
+          counter.textContent = (idx + 1) + ' / ' + photos.length;
+        }
+
+        function next() { show(idx + 1); resetTimer(); }
+        function prev() { show(idx - 1); resetTimer(); }
+
+        function resetTimer() {
+          clearInterval(timer);
+          timer = setInterval(next, 5000);
+        }
+
+        document.getElementById('slideNext').addEventListener('click', next);
+        document.getElementById('slidePrev').addEventListener('click', prev);
+
+        resetTimer();
+      })();
+    </script>
+
+    <p>Photos only ever capture the highlights, leaving out the mundane and genuinely hard parts of building a life far from home; but they still help us remember some of the best and most meaningful times of our lives. Looking back, we're reminded how fortunate we've been to be surrounded by friends, family, and a couple of dogs who tolerated all the moving. There's plenty worth sharing here.</p>
+
+    <p style="font-family:Georgia,'Times New Roman',serif; font-size:clamp(1.25rem,2.5vw,1.6rem); color:var(--espresso); line-height:1.3; margin-top:2rem;">Now is the time to declare our love and commitment, celebrate it, and share it with the people closest to us.</p>
+
+    <div class="arrows">&gt; &gt; &gt; &gt; &nbsp; &lt; &lt; &lt; &lt;</div>
+  </div>
+</main>
+<footer>
+  <p class="f-names">Chad &amp; Rebekah</p>
+  <p class="f-arrows">&gt; &gt; &gt; &nbsp; &lt; &lt; &lt;</p>
+  <p>21 November 2026 · Agua Linda Farm, Amado, AZ</p>
+</footer>
+
+</body>
+</html>
