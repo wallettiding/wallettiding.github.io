@@ -78,6 +78,10 @@
   .form-row input, .form-row select, .form-row textarea { width:100%; padding:0.65rem 0.9rem; border:1px solid var(--border); border-radius:4px; background:var(--paper); color:var(--text); font-size:15px; font-family:inherit; appearance:none; outline:none; transition:border-color 0.2s,box-shadow 0.2s; }
   .form-row input:focus, .form-row select:focus, .form-row textarea:focus { border-color:var(--terracotta); box-shadow:0 0 0 3px rgba(193,106,66,0.12); }
   .form-row textarea { min-height:84px; resize:vertical; }
+  .check-group { display:flex; flex-direction:column; gap:0.6rem; margin-top:0.2rem; }
+  .check-group label { font-size:15px; letter-spacing:0; text-transform:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; cursor:pointer; }
+  .check-group input[type=checkbox] { width:18px; height:18px; flex-shrink:0; accent-color:var(--terracotta); cursor:pointer; }
+  .shuttle-section { margin-top:1.3rem; display:none; }
   .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
   .plus-one-note { font-size:13px; color:var(--text-muted); margin:-0.5rem 0 1.3rem; }
   .rsvp-success { display:none; background:var(--paper-warm); border:1px solid var(--border); border-radius:6px; padding:2.5rem 2rem; text-align:center; }
@@ -140,12 +144,21 @@
       <div class="form-row"><label for="email">Email</label><input type="email" id="email" placeholder="you@email.com"></div>
 
       <div class="form-row">
-        <label for="attending">Will you attend?</label>
-        <select id="attending">
-          <option value="">— Select —</option>
-          <option value="yes">Yes, we'll be there</option>
-          <option value="no">No, can't make it</option>
-        </select>
+        <label>What will you attend?</label>
+        <div class="check-group">
+          <label><input type="checkbox" id="att-welcome" onchange="updateShuttle()"> Welcome Party</label>
+          <label><input type="checkbox" id="att-ding" onchange="updateShuttle()"> The Ding</label>
+          <label><input type="checkbox" id="att-brunch" onchange="updateShuttle()"> Farewell Brunch</label>
+          <label><input type="checkbox" id="att-none" onchange="updateShuttle()"> None of the above (I won't be able to make it!)</label>
+        </div>
+      </div>
+
+      <div class="form-row shuttle-section" id="shuttle-section">
+        <label>Shuttle service — night of The Ding</label>
+        <div class="check-group">
+          <label><input type="checkbox" id="shuttle-early"> Early shuttle (~7:30 PM) pickup</label>
+          <label><input type="checkbox" id="shuttle-late"> Late shuttle (~10:00 PM) pickup</label>
+        </div>
       </div>
 
       <div class="form-row"><label for="dietary">Dietary restrictions / needs</label><input type="text" id="dietary" placeholder="None, vegetarian, gluten-free, allergies, etc."></div>
@@ -168,11 +181,24 @@
   <p>21 November 2026 · Agua Linda Farm, Amado, AZ</p>
 </footer>
 <script>
+  function updateShuttle(){
+    var ding=document.getElementById('att-ding').checked;
+    document.getElementById('shuttle-section').style.display=ding?'block':'none';
+    // "none of the above" unchecks all others; others uncheck "none"
+    var none=document.getElementById('att-none');
+    var others=['att-welcome','att-ding','att-brunch'];
+    if(event&&event.target&&event.target.id==='att-none'&&none.checked){
+      others.forEach(function(id){document.getElementById(id).checked=false;});
+      document.getElementById('shuttle-section').style.display='none';
+    } else if(event&&event.target&&event.target.id!=='att-none'){
+      none.checked=false;
+    }
+  }
   function submitRSVP(){
     var fn=document.getElementById('fname').value.trim();
     var ln=document.getElementById('lname').value.trim();
-    var at=document.getElementById('attending').value;
-    if(!fn||!ln||!at){alert('Please add your name and let us know if you can make it.');return;}
+    var anyChecked=['att-welcome','att-ding','att-brunch','att-none'].some(function(id){return document.getElementById(id).checked;});
+    if(!fn||!ln||!anyChecked){alert('Please add your name and let us know what you'll attend.');return;}
     document.getElementById('rsvp-form').style.display='none';
     document.getElementById('rsvp-success').style.display='block';
     window.scrollTo({top:0,behavior:'smooth'});
