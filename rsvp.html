@@ -81,7 +81,6 @@
   .check-group { display:flex; flex-direction:column; gap:0.6rem; margin-top:0.2rem; }
   .check-group label { font-size:15px; letter-spacing:0; text-transform:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; cursor:pointer; }
   .check-group input[type=checkbox] { width:18px; height:18px; flex-shrink:0; accent-color:var(--terracotta); cursor:pointer; appearance:auto; padding:0; border:none; background:none; outline:revert; }
-  .shuttle-section { margin-top:1.3rem; display:none; }
   .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
   .plus-one-note { font-size:13px; color:var(--text-muted); margin:-0.5rem 0 1.3rem; }
   .rsvp-success { display:none; background:var(--paper-warm); border:1px solid var(--border); border-radius:6px; padding:2.5rem 2rem; text-align:center; }
@@ -146,18 +145,16 @@
       <div class="form-row">
         <label>What will you attend?</label>
         <div class="check-group">
-          <label><input type="checkbox" id="att-welcome" onchange="updateShuttle(this)"> Welcome Party</label>
-          <label><input type="checkbox" id="att-ding" onchange="updateShuttle(this)"> The Ding</label>
-          <label><input type="checkbox" id="att-brunch" onchange="updateShuttle(this)"> Farewell Brunch</label>
-          <label><input type="checkbox" id="att-none" onchange="updateShuttle(this)"> None of the above (I won't be able to make it!)</label>
-        </div>
-      </div>
-
-      <div class="form-row shuttle-section" id="shuttle-section">
-        <label>Shuttle service — night of The Ding</label>
-        <div class="check-group">
-          <label><input type="checkbox" id="shuttle-early"> Early shuttle (~7:30 PM) pickup</label>
-          <label><input type="checkbox" id="shuttle-late"> Late shuttle (~10:00 PM) pickup</label>
+          <label><input type="checkbox" id="att-welcome" onchange="updateNone(this)"> Welcome Party</label>
+          <label><input type="checkbox" id="att-ding" onchange="updateNone(this)"> The Ding
+            <div class="check-group" style="margin-top:0.5rem;margin-left:1.5rem;">
+              <label style="font-size:13px;color:var(--text-muted);"><input type="checkbox" id="shuttle-early"> Early shuttle (~7:30 PM)</label>
+              <label style="font-size:13px;color:var(--text-muted);"><input type="checkbox" id="shuttle-late"> Late shuttle (~10:00 PM)</label>
+              <label style="font-size:13px;color:var(--text-muted);"><input type="checkbox" id="shuttle-none"> No shuttle needed</label>
+            </div>
+          </label>
+          <label><input type="checkbox" id="att-brunch" onchange="updateNone(this)"> Farewell Brunch</label>
+          <label><input type="checkbox" id="att-none" onchange="updateNone(this)"> None of the above (I won't be able to make it!)</label>
         </div>
       </div>
 
@@ -181,16 +178,14 @@
   <p>21 November 2026 · Agua Linda Farm, Amado, AZ</p>
 </footer>
 <script>
-  function updateShuttle(el){
+  function updateNone(el){
     var none=document.getElementById('att-none');
     var others=['att-welcome','att-ding','att-brunch'];
     if(el.id==='att-none'&&el.checked){
       others.forEach(function(id){document.getElementById(id).checked=false;});
-    } else {
+    } else if(el.id!=='att-none'){
       none.checked=false;
     }
-    document.getElementById('shuttle-section').style.display=
-      document.getElementById('att-ding').checked?'block':'none';
   }
 
   function submitRSVP(){
@@ -213,6 +208,7 @@
     var shuttles=[];
     if(document.getElementById('shuttle-early').checked) shuttles.push('Early (~7:30 PM)');
     if(document.getElementById('shuttle-late').checked) shuttles.push('Late (~10:00 PM)');
+    if(document.getElementById('shuttle-none').checked) shuttles.push('No shuttle needed');
 
     var body=new URLSearchParams({
       name: fn+' '+ln,
