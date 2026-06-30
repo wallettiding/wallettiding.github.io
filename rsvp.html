@@ -162,6 +162,7 @@
       <div class="form-row"><label for="song">Song request</label><textarea id="song" placeholder="You may request 1 song for us to add to our playlist, but we reserve the right not to add it if we really don&#39;t want to!" style="min-height:64px;"></textarea></div>
       <div class="form-row"><label for="note">Anything else?</label><textarea id="note" placeholder="Questions, a note for us... If you're bringing kids or additional guests beyond your +1, please list their names here."></textarea></div>
 
+      <p id="rsvp-error" style="display:none;color:#c0392b;font-size:14px;margin-bottom:0.75rem;"></p>
       <button id="rsvp-btn" class="btn btn-primary" style="width:100%;padding:0.85rem;font-size:14px;" onclick="submitRSVP()">Send RSVP</button>
     </div>
 
@@ -195,10 +196,13 @@
     var anyChecked=['att-welcome','att-ding','att-brunch','att-none'].some(function(id){
       return document.getElementById(id).checked;
     });
+    var err=document.getElementById('rsvp-error');
     if(!fn||!ln||!anyChecked){
-      alert('Please add your name and let us know what you\'ll attend.');
+      err.textContent='Please fill in your name and select at least one option above.';
+      err.style.display='block';
       return;
     }
+    err.style.display='none';
 
     var attending=[];
     if(document.getElementById('att-welcome').checked) attending.push('Welcome Party');
