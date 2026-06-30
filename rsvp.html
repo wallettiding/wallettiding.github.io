@@ -162,7 +162,7 @@
       <div class="form-row"><label for="song">Song request</label><textarea id="song" placeholder="You may request 1 song for us to add to our playlist, but we reserve the right not to add it if we really don&#39;t want to!" style="min-height:64px;"></textarea></div>
       <div class="form-row"><label for="note">Anything else?</label><textarea id="note" placeholder="Questions, a note for us... If you're bringing kids or additional guests beyond your +1, please list their names here."></textarea></div>
 
-      <button class="btn btn-primary" style="width:100%;padding:0.85rem;font-size:14px;" onclick="submitRSVP()">Send RSVP</button>
+      <button id="rsvp-btn" class="btn btn-primary" style="width:100%;padding:0.85rem;font-size:14px;" onclick="submitRSVP()">Send RSVP</button>
     </div>
 
     <div class="rsvp-success" id="rsvp-success">
@@ -188,6 +188,8 @@
   }
 
   function submitRSVP(){
+    var btn=document.getElementById('rsvp-btn');
+    if(btn.disabled) return;
     var fn=document.getElementById('fname').value.trim();
     var ln=document.getElementById('lname').value.trim();
     var anyChecked=['att-welcome','att-ding','att-brunch','att-none'].some(function(id){
@@ -220,6 +222,9 @@
       note: document.getElementById('note').value.trim()
     });
 
+    btn.disabled=true;
+    btn.textContent='Sending…';
+
     fetch('https://formspree.io/f/xzdlaqor', {
       method:'POST',
       headers:{'Accept':'application/json','Content-Type':'application/x-www-form-urlencoded'},
@@ -230,9 +235,13 @@
         document.getElementById('rsvp-success').style.display='block';
         window.scrollTo({top:0,behavior:'smooth'});
       } else {
+        btn.disabled=false;
+        btn.textContent='Send RSVP';
         alert('Something went wrong. Please email us directly at wallettiding@gmail.com');
       }
     }).catch(function(){
+      btn.disabled=false;
+      btn.textContent='Send RSVP';
       alert('Something went wrong. Please email us directly at wallettiding@gmail.com');
     });
   }
