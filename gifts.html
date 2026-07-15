@@ -123,7 +123,17 @@
     <h2>Your presence is the present</h2>
     <p>Honestly, having you there is all we want. You've traveled, taken time, and shown up — that's the gift.</p>
     <p>That said, a few of you have asked. We're not doing a traditional registry, but if you'd like to give something, you can contribute to our relocation fund as we move back to the States and put down roots. No expectations at all, truly.</p>
-    <p style="margin-top:1.25rem;"><a class="btn btn-primary" href="https://www.paypal.me/wallettiding" target="_blank" rel="noopener">Contribute via PayPal</a></p>
+    <p style="margin-top:1.25rem;display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;">
+      <a class="btn btn-primary" href="https://www.paypal.me/wallettiding" target="_blank" rel="noopener">Contribute via PayPal</a>
+      <button class="btn btn-primary" onclick="revealZelle()" id="zelle-btn">Contribute via Zelle</button>
+      <span id="zelle-handle" style="display:none;font-size:14px;color:var(--ink);">Send to: <strong>chadvietti@gmail.com</strong></span>
+    </p>
+    <script>
+      function revealZelle(){
+        document.getElementById('zelle-btn').style.display='none';
+        document.getElementById('zelle-handle').style.display='inline';
+      }
+    </script>
 
     <div class="arrows">&gt; &gt; &gt; &gt; &nbsp; &lt; &lt; &lt; &lt;</div>
   </div>
